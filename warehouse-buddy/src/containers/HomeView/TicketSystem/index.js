@@ -9,6 +9,7 @@ import { sendTicket } from '../../../redux/openai_api/actions';
 import React, { useState, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
+import { useSpeechRecognition } from 'react-speech-kit';
 
 export const TicketSystem = () => {
     const dispatch = useDispatch();
@@ -55,7 +56,17 @@ export const TicketSystem = () => {
         // dispatch(sendTicket(new_ticket));
         // onClose();
         setCongrats(true);
+        stop();
+        console.log(listening);
     }
+
+    const [recordTextValue, setRecordTextValue] = useState('');
+    const { listen, listening, stop } = useSpeechRecognition({
+      onResult: (result) => {
+        setRecordTextValue(result);
+      },
+    });
+
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
@@ -81,6 +92,8 @@ export const TicketSystem = () => {
         .catch(error => {
             console.error(error);
         });
+
+        listen();
     }, [webcamRef]);
 
     const onSend = () => {
@@ -99,6 +112,7 @@ export const TicketSystem = () => {
     const onExit = () => {
         setCongrats(null);
         setImg(null);
+        setRecordTextValue('');
         onClose();
     }
 
@@ -134,9 +148,19 @@ export const TicketSystem = () => {
                                     </>
                                 ) : (
                                     <>
-                                    <img src={img} alt="screenshot" />
+                                    
+                                    <div class="photo">
+                                        <img src={img} alt="screenshot" />
+                                        <div class="centered"><div class="dot-pulse"></div></div>
+                                    </div>
                                     <div class="photo-button">
                                         <Button class="listen-button" onClick={sendData}><div class="button"><bf>Done</bf></div></Button>
+                                    </div>
+                                    <div>
+                                        <textarea class="recorded-text"
+                                        value={recordTextValue}
+                                        onChange={(event) => setRecordTextValue(event.target.value)}
+                                        />
                                     </div>
                                     </>
                                 )}
