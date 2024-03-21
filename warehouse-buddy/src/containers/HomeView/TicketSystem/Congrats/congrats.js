@@ -8,15 +8,11 @@ import {Box, Heading, Text, Table,
     TableCaption,
     TableContainer,
     useEditable,} from '@chakra-ui/react'
-import { useSpeechSynthesis } from 'react-speech-kit';    
 import React, {useEffect} from 'react';
 
-export const Congrats = ({Talk}) => {
-    const { speak, speaking, cancel } = useSpeechSynthesis();
+export const Congrats = ({TalkFunction}) => {
 
-    useEffect(() => {
-        Talk()
-    }, [ speak]); // Depend on talk, speak, and finishTalking to ensure correctness
+    TalkFunction("Congrats! Well done, hi hi hi!");
 
     return (
         <Box >

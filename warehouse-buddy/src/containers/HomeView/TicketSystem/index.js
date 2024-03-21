@@ -33,16 +33,27 @@ export const TicketSystem = ({mealType, increaseCalorie}) => {
     // Set talk to true when the screen with nutrition feedback gets displayed Talk
     // will be set back to false when the talking finishes
     const { speak, speaking, cancel } = useSpeechSynthesis();
-    const [talk,
-        setTalk] = useState(true);
-    const finishTalking = () => {
-        setTalk(false);
-    }
+    const [congrats, setCongrats] = useState(false);
     const feedbackAfterMeal = "Your pasta had enough calories, good job! Maybe next time try to increase the amount of protein, for example by adding cheese"
 
     useEffect(() => {
         console.log(increaseCalorie);
     }, [increaseCalorie]);
+
+    useEffect(() => {
+        const handleVoicesChanged = () => {
+            const voices = window.speechSynthesis.getVoices();
+            console.log(voices);
+            // Optionally, find and set the voice you need here
+        };
+    
+        window.speechSynthesis.onvoiceschanged = handleVoicesChanged;
+    
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.speechSynthesis.onvoiceschanged = null;
+        };
+    }, []);
 
     const dispatch = useDispatch();
     const {isOpen, onOpen, onClose} = useDisclosure()
@@ -71,31 +82,35 @@ export const TicketSystem = ({mealType, increaseCalorie}) => {
         return <option value={el} key={el}>{el}</option>;
     });
 
+
+    const Talk = (message) => {
+        const voices = window.speechSynthesis.getVoices();
+
+        console.log(voices);
+        const englishVoice = voices.find((voice) => voice.lang === 'en-US' || voice.lang.startsWith('en-'));
+
+        console.log(englishVoice);
+
+        if (englishVoice) {
+            speak({
+                text: message,
+                voice: englishVoice,
+                // onEnd: () => {
+                //     finishTalking(); // Call finishTalking to update the state if needed
+                // }
+            });
+        }
+    }
+
     const onSend = () => {
         if (typeof increaseCalorie === 'function') {
             increaseCalorie();
         } else {
             console.error('increaseCalorie is not a function', increaseCalorie);
         }
+        setCongrats(true);
 
-        onClose();
-    }
-
-    const Talk = (message, finishTalking) => {
-        const voices = window
-            .speechSynthesis
-            .getVoices();
-        const englishVoice = voices.find((voice) => voice.lang === 'en-US' || voice.lang.startsWith('en-'));
-
-        if (englishVoice) {
-            speak({
-                text: message,
-                voice: englishVoice,
-                onEnd: () => {
-                    finishTalking(); // Call finishTalking to update the state if needed
-                }
-            });
-        }
+        // onClose();
     }
 
     return (
@@ -128,7 +143,12 @@ export const TicketSystem = ({mealType, increaseCalorie}) => {
                             h='calc(20vh)'
                             onChange={handleChangeInput}
                             value={issue}/>
-                        <Congrats Talk={Talk(feedbackAfterMeal, finishTalking)}></Congrats>
+                            {congrats === true ? (
+                                <Congrats TalkFunction={Talk}></Congrats>
+                            ) : (
+                                <></>
+                            )
+                            }
                     </ModalBody>
                     <ModalFooter>
                         <Button colorScheme='facebook' mr={3} onClick={onSend}>
