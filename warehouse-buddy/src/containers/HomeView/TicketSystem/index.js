@@ -1,37 +1,12 @@
 import './index.css';
-import {
-    Button,
-    useDisclosure,
-    Flex,
-    Spacer,
-    Divider,
-    Card,
-    Box,
-    CardBody
-} from '@chakra-ui/react'
-
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton
-} from '@chakra-ui/react'
-import {Textarea} from '@chakra-ui/react'
-import {Select} from '@chakra-ui/react'
-import {useSelector, useDispatch} from 'react-redux';
-import {sendTicket} from '../../../redux/openai_api/actions';
-import React, {useState, useEffect} from 'react';
-import {WebcamScreenshot} from './WebcameraScreenshot';
+import { Button, useDisclosure, Flex, Spacer, Divider } from '@chakra-ui/react'
 
 import{Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux';
 import { sendTicket } from '../../../redux/openai_api/actions';
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
 import { useSpeechRecognition } from 'react-speech-kit';
@@ -87,6 +62,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
         // dispatch(sendTicket(new_ticket));
         // onClose();
         setCongrats(true);
+        updateCalories();
         stop();
         console.log(listening);
     }
@@ -127,14 +103,12 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
         listen();
     }, [webcamRef]);
 
-    const onSend = () => {
+    const updateCalories = () => {
         if (typeof increaseCalorie === 'function') {
             increaseCalorie();
         } else {
             console.error('increaseCalorie is not a function', increaseCalorie);
         }
-
-        onClose();
     }
 
     const onExit = () => {
