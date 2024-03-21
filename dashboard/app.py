@@ -9,10 +9,10 @@ from datetime import datetime, timedelta
 st.set_page_config(layout='wide', page_title='VitalEaty Dashboard')
 
 # set the title of the app
-st.title('VitalEaty 🫒')
+st.title('VitalEaty 🍏')
 
 
-calories_df = pd.read_csv('calories.csv')
+calories_df = pd.read_csv('calories_breakdown.csv')[['Date','Fat','Protein','Carbohydrates']]
 weight_df = pd.read_csv('weight.csv')
 
 # Convert 'Date' columns to datetime
@@ -65,7 +65,7 @@ with col12:
         "green",
         css_styles="""
         button {
-            background-color: #55FF55;
+            background-color: #77EE77;
             color: black;
         }""",
     ):
@@ -77,7 +77,7 @@ with col12:
         "red",
         css_styles="""
         button {
-            background-color: #FF5555;
+            background-color: #FF8888;
             color: black;
         }""",
     ):
@@ -89,7 +89,11 @@ st.write('---')
 col2, col3 = st.columns([1, 1])
 
 with col2:
-    fig1 = px.bar(calories_df, x='Date', y='Calories', title='Daily Calorie Consumption')
+    calories_long_df = pd.melt(calories_df, id_vars=['Date'], value_vars=['Fat','Protein','Carbohydrates'],
+                           var_name='Category', value_name='Calories')
+
+    # Create a grouped bar chart
+    fig1 = px.bar(calories_long_df, x='Date', y='Calories', color='Category', barmode='stack', title='Daily Calorie Consumption Breakdown')
     fig1.add_hrect(y0=1800, y1=2000, 
             annotation_text="Target intake", annotation_position="top left",
             fillcolor="green", opacity=0.25, line_width=0)

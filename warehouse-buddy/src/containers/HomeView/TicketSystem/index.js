@@ -165,13 +165,16 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                     {/* <ModalCloseButton /> */}
                     <ModalBody>
                         <div className="webcam-container">
-                            {congrats === null ? (
+                            { congrats === null ? (
                                 <>
                                 {img === null ? (
                                     <>
+                                    <div class="plate-overlay"></div>
+                                    <div class="webcam-box">
                                         <Webcam
                                             audio={false}
                                             mirrored={true}
+
                                             height={400}
                                             width={400}
                                             ref={webcamRef}
@@ -184,6 +187,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                                 <div class="button"><bf>Capture</bf></div>
                                             </Button>
                                         </div>
+                                    </div>
                                     </>
                                 ) : (
                                     <Box h="100%" w="100%">
@@ -222,9 +226,8 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                             I finished describing my meal                                        
                                         </Button>                                     
                                     </Box>
-                                )}
-                                </>
-                            ) : (
+                            
+                            )} </> ) : (
                                 Congrats()
                             )}
                         </div>
