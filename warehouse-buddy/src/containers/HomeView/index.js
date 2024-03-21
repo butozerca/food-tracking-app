@@ -68,7 +68,7 @@ export const HomeView = ({tasks}) => {
                     <Stack spacing={5}>
                         <Box width="100%">
                             <Heading size='md' marginBottom={3}>
-                                Your daily calorie intake: {countCalorieDone} / {calorieTotal}
+                                Your daily calorie goal: {countCalorieDone} / {calorieTotal}
                             </Heading>
                             <Progress hasStripe value={countCalorieDone/calorieTotal * 100} height={5} borderWidth={3}/>
                         </Box>

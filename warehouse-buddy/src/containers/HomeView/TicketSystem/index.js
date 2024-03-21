@@ -226,7 +226,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                         <PopoverContent >
                                             <PopoverArrow />
                                             <PopoverCloseButton />
-                                            <PopoverBody fontSize="3xl" borderWidth="2px" borderColor='gray.400' bg='gray.200'>Today I made just a pasta with tomato sauce and a spoon of cheese on top</PopoverBody>
+                                            <PopoverBody fontSize="3xl" borderWidth="2px" borderColor='gray.400' bg='gray.200'>I made pasta with tomato sauce and a spoon of cheese on top</PopoverBody>
                                         </PopoverContent>
                                         </Popover>
                                         
@@ -242,7 +242,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                             w="100%"
                                         />       
                                         <Button lineBreak="anywhere" fontSize="4xl" size="lg" mt="50px" variant='solid' colorScheme='green' w="100%" height="100px" onClick={sendData}>
-                                            Finished                                     
+                                            Done                                     
                                         </Button>                                     
                                     </Box>
                             
