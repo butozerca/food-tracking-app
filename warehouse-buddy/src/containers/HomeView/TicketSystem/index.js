@@ -25,6 +25,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {sendTicket} from '../../../redux/openai_api/actions';
 import React, {useState, useEffect} from 'react';
 import {WebcamScreenshot} from './WebcameraScreenshot';
+import AudioRecorder from './recorder.js';
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
@@ -84,6 +85,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                         <ModalCloseButton/>
                         <ModalBody>
                             <WebcamScreenshot/>
+                            <AudioRecorder />
                             <Select
                                 class="select-ticket-type"
                                 placeholder='Wybierz kategorię zgłoszenia'
