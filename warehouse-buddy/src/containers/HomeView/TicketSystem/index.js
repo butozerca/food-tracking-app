@@ -1,33 +1,6 @@
 import './index.css';
 import { Button, useDisclosure, Flex, Spacer, Divider } from '@chakra-ui/react'
 
-<<<<<<< HEAD
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton
-} from '@chakra-ui/react'
-import {Textarea} from '@chakra-ui/react'
-import {Select} from '@chakra-ui/react'
-import {useSelector, useDispatch} from 'react-redux';
-import {sendTicket} from '../../../redux/openai_api/actions';
-import React, {useState, useEffect} from 'react';
-import {WebcamScreenshot} from './WebcameraScreenshot';
-import {Congrats} from './Congrats/congrats';
-import { useSpeechSynthesis } from 'react-speech-kit';    
-
-
-export const TicketSystem = ({mealType, increaseCalorie}) => {
-    // Set talk to true when the screen with nutrition feedback gets displayed Talk
-    // will be set back to false when the talking finishes
-    const { speak, speaking, cancel } = useSpeechSynthesis();
-    const [congrats, setCongrats] = useState(false);
-    const feedbackAfterMeal = "Your pasta had enough calories, good job! Maybe next time try to increase the amount of protein, for example by adding cheese"
-=======
 import{Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
@@ -37,8 +10,8 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
 import { useSpeechRecognition } from 'react-speech-kit';
->>>>>>> main
 
+export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
         console.log(increaseCalorie);
     }, [increaseCalorie]);
@@ -91,7 +64,16 @@ import { useSpeechRecognition } from 'react-speech-kit';
     let user_id = 0 + Math.random() * (1000000 - 0);
 
     // show congrats message
-    const [congrats, setCongrats] = useState(null)
+    const [congrats, setCongrats] = useState(null);
+
+    useEffect(() => {
+        if (congrats === true) {
+            const msg = new SpeechSynthesisUtterance();
+            console.log(msg);
+            msg.text = "Congratulations, thank you very much!";
+            window.speechSynthesis.speak(msg);
+        }
+    }, [congrats]);
 
     const sendData = () => {
         // let new_ticket = {
