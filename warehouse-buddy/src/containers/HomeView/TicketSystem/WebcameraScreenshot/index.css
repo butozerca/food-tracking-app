@@ -1,0 +1,7 @@
+.photo-button {
+    display: flex;
+    justify-content: end;
+
+    margin: 0.4em;
+    margin-bottom: 1.5em;;
+}
