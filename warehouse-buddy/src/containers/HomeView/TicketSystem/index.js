@@ -9,6 +9,7 @@ import { sendTicket } from '../../../redux/openai_api/actions';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
+import { Congrats } from './Congrats/congrats';
 import { useSpeechRecognition } from 'react-speech-kit';
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
@@ -73,11 +74,26 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
         if (congrats === true) {
             const msg = new SpeechSynthesisUtterance();
-            console.log(msg);
-            msg.text = "Congratulations, thank you very much!";
+            msg.text = "Congratulations, thank you very much! Your pasta looks very good, it has enough calories, but you can add more protein next time by adding a fish.";
             window.speechSynthesis.speak(msg);
         }
     }, [congrats]);
+
+    useEffect(() => {
+        if (img === true) {
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = "Hello! Please hold your phone over the plate, and press Capture when the plate fills the circle.";
+            window.speechSynthesis.speak(msg);
+        }
+    }, [img]);
+
+    useEffect(() => {
+        if (img === false) {
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = "Great picture! Please tell me, what you have on plate? When you're done, press the button Done.";
+            window.speechSynthesis.speak(msg);
+        }
+    }, [img]);
 
     const sendData = () => {
         // let new_ticket = {
@@ -101,7 +117,6 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
         setRecordTextValue(result);
       },
     });
-
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
@@ -196,10 +211,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                 )}
                                 </>
                             ) : (
-                                <>
-                                    <div class="congrats">Congrats! You have successfully reported an issue.
-                                    </div>
-                                </>
+                                Congrats()
                             )}
                         </div>
                         {/* <Select class="select-ticket-type" placeholder='Wybierz kategorię zgłoszenia'onChange={handleChange} value={selectedCategory}>

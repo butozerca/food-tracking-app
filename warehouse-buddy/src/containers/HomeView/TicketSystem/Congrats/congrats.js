@@ -10,10 +10,7 @@ import {Box, Heading, Text, Table,
     useEditable,} from '@chakra-ui/react'
 import React, {useEffect} from 'react';
 
-export const Congrats = ({TalkFunction}) => {
-
-    TalkFunction("Congrats! Well done, hi hi hi!");
-
+export const Congrats = () => {
     return (
         <Box >
             <Heading size='lg'>
