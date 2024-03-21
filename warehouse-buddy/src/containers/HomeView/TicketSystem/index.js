@@ -23,10 +23,10 @@ export const TicketSystem = () => {
         setIssue(event.target.value);
     }
 
-    let categories = ["Bezpieczeństwo", "Załadunek", "Rozładunek", "Czystość i ergonomia", "Lokalizacja w magazynie", "Inne"]
-    const list = categories.map((el) => {
-        return <option value={el} key={el}>{el}</option>;
-    });
+    // let categories = ["Bezpieczeństwo", "Załadunek", "Rozładunek", "Czystość i ergonomia", "Lokalizacja w magazynie", "Inne"]
+    // const list = categories.map((el) => {
+    //     return <option value={el} key={el}>{el}</option>;
+    // });
 
     const onSend = () => {
             // Send data to the backend via POST
@@ -51,17 +51,17 @@ export const TicketSystem = () => {
                     <ModalCloseButton />
                     <ModalBody>
                         <WebcamScreenshot />
-                        <Select class="select-ticket-type" placeholder='Wybierz kategorię zgłoszenia'onChange={handleChange} value={selectedCategory}>
+                        {/* <Select class="select-ticket-type" placeholder='Wybierz kategorię zgłoszenia'onChange={handleChange} value={selectedCategory}>
                             {list}
                         </Select> 
                         <Divider id="ticket-divider"/>  
-                        <Textarea placeholder='Write your description here.' size='md' h='calc(20vh)' onChange={handleChangeInput} value={issue}/>
+                        <Textarea placeholder='Write your description here.' size='md' h='calc(20vh)' onChange={handleChangeInput} value={issue}/> */}
                     </ModalBody>
-                    <ModalFooter>
+                    {/* <ModalFooter>
                         <Button colorScheme='facebook' mr={3} onClick={onSend}>
                             Submit
                         </Button>
-                    </ModalFooter>
+                    </ModalFooter> */}
                 </ModalContent>
             </Modal>
         </div>

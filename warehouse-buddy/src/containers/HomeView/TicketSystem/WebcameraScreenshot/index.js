@@ -1,10 +1,15 @@
 import './index.css';
 import React, { useCallback, useRef, useState } from "react";
-import Webcam from "react-webcam"
-import { Button } from '@chakra-ui/react'
+import { Button, useDisclosure, Flex, Spacer, Divider } from '@chakra-ui/react'
+import { useSelector, useDispatch } from 'react-redux';
+import { sendTicket } from '../../../../redux/openai_api/actions';
+import Webcam from "react-webcam";  
 
 export const WebcamScreenshot = () => {
-
+  const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [issue, setIssue] = useState('');
   const [img, setImg] = useState(null);
   const webcamRef = useRef(null);
 
@@ -41,12 +46,20 @@ export const WebcamScreenshot = () => {
       .catch(error => {
         console.error(error);
       });
+    
+    let new_picture = {
+        "picture": imageSrc
+    }
+
+    setIssue('');
+
+    dispatch(sendTicket(new_picture));
   }, [webcamRef]);
 
 
   return (
     <div className="webcam-container">
-      {img === null ? (
+      {/* {img === null ? ( */}
         <>
             <Webcam
                 audio={false}
@@ -61,14 +74,14 @@ export const WebcamScreenshot = () => {
                 <Button colorScheme='facebook' size="sm" variant="outline" onClick={capture}>Capture</Button>
             </div>
         </>
-      ) : (
-        <>
-          <img src={img} alt="screenshot" />
-          <div class="photo-button">
-            <Button colorScheme='facebook' size="sm" variant="solid" onClick={() => setImg(null)}>Retake</Button>
-          </div>
-        </>
-      )}
+      {/* // ) : (
+      //   <>
+      //     <img src={img} alt="screenshot" />
+      //     <div class="photo-button">
+      //       <Button colorScheme='facebook' size="sm" variant="solid" onClick={onSend}>Accept</Button>
+      //     </div>
+      //   </>
+      // )} */}
     </div>
   );
 
