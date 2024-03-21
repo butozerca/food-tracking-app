@@ -1,10 +1,6 @@
 import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useState} from 'react';
-import {ChatInput} from './ChatInput';
-import {FastPromptSection} from './FastPromptSection';
-import {TaskBanner} from './TaskBanner';
-import {SpeechToText} from './ChatInput/SpeechToText';
 import {
     Button,
     Card,

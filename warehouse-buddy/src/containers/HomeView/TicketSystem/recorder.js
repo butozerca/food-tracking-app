@@ -45,7 +45,12 @@ function AudioRecorder() {
         body: JSON.stringify({
             url: audio,
         })
-    }).then(response => {
+    })
+    .catch(error => {
+        console.log("error " + error)
+        setTranscription("Transcription will look like this")
+    })
+    .then(response => {
         console.log("response: " + response)
         setTranscription("Transcription will look like this")
     });
