@@ -25,12 +25,25 @@ import {useSelector, useDispatch} from 'react-redux';
 import {sendTicket} from '../../../redux/openai_api/actions';
 import React, {useState, useEffect} from 'react';
 import {WebcamScreenshot} from './WebcameraScreenshot';
+import {Congrats} from './Congrats/congrats';
+import { useSpeechSynthesis } from 'react-speech-kit';    
 
-export const TicketSystem = ({mealType, increaseCalorie }) => {
+
+export const TicketSystem = ({mealType, increaseCalorie}) => {
+    // Set talk to true when the screen with nutrition feedback gets displayed Talk
+    // will be set back to false when the talking finishes
+    const { speak, speaking, cancel } = useSpeechSynthesis();
+    const [talk,
+        setTalk] = useState(true);
+    const finishTalking = () => {
+        setTalk(false);
+    }
+    const feedbackAfterMeal = "Your pasta had enough calories, good job! Maybe next time try to increase the amount of protein, for example by adding cheese"
+
     useEffect(() => {
         console.log(increaseCalorie);
     }, [increaseCalorie]);
-    
+
     const dispatch = useDispatch();
     const {isOpen, onOpen, onClose} = useDisclosure()
     const [selectedCategory,
@@ -68,44 +81,62 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
         onClose();
     }
 
+    const Talk = (message, finishTalking) => {
+        const voices = window
+            .speechSynthesis
+            .getVoices();
+        const englishVoice = voices.find((voice) => voice.lang === 'en-US' || voice.lang.startsWith('en-'));
+
+        if (englishVoice) {
+            speak({
+                text: message,
+                voice: englishVoice,
+                onEnd: () => {
+                    finishTalking(); // Call finishTalking to update the state if needed
+                }
+            });
+        }
+    }
+
     return (
         <Box >
-                <Button
-                    id="ticket-button"
-                    onClick={onOpen}
-                    colorScheme='teal'
-                    variant='outline'
-                    size='lg'>{mealType}</Button>
+            <Button
+                id="ticket-button"
+                onClick={onOpen}
+                colorScheme='teal'
+                variant='outline'
+                size='lg'>{mealType}</Button>
 
-                <Modal isOpen={isOpen} onClose={onClose}>
-                    <ModalOverlay/>
-                    <ModalContent>
-                        <ModalHeader/>
-                        <ModalCloseButton/>
-                        <ModalBody>
-                            <WebcamScreenshot/>
-                            <Select
-                                class="select-ticket-type"
-                                placeholder='Wybierz kategorię zgłoszenia'
-                                onChange={handleChange}
-                                value={selectedCategory}>
-                                {list}
-                            </Select>
-                            <Divider id="ticket-divider"/>
-                            <Textarea
-                                placeholder='Write your description here.'
-                                size='md'
-                                h='calc(20vh)'
-                                onChange={handleChangeInput}
-                                value={issue}/>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button colorScheme='facebook' mr={3} onClick={onSend}>
-                                Submit
-                            </Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay/>
+                <ModalContent>
+                    <ModalHeader/>
+                    <ModalCloseButton/>
+                    <ModalBody>
+                        <WebcamScreenshot/>
+                        <Select
+                            class="select-ticket-type"
+                            placeholder='Wybierz kategorię zgłoszenia'
+                            onChange={handleChange}
+                            value={selectedCategory}>
+                            {list}
+                        </Select>
+                        <Divider id="ticket-divider"/>
+                        <Textarea
+                            placeholder='Write your description here.'
+                            size='md'
+                            h='calc(20vh)'
+                            onChange={handleChangeInput}
+                            value={issue}/>
+                        <Congrats Talk={Talk(feedbackAfterMeal, finishTalking)}></Congrats>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme='facebook' mr={3} onClick={onSend}>
+                            Submit
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </Box>
     );
 }
