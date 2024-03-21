@@ -7,45 +7,50 @@ import {Box, Heading, Text, Table,
     Td,
     TableCaption,
     TableContainer,
+    Button,
     useEditable,} from '@chakra-ui/react'
 import React, {useEffect} from 'react';
 
-export const Congrats = () => {
+export const Congrats = ({onCloseExit}) => {
     return (
         <Box >
-            <Heading size='lg'>
-                Thank you! 
+            <Heading as='h2' size='4xl' mb="25px" mt="15px">
+                Thank you! ❤️ 💖
+                💕
             </Heading>
             <Box>
-                <Text fontSize='xl'>Keep up the great work Theresa! Here is the nutritional information:</Text>
+                <Text mb="25px" fontSize='2xl'>Keep up the great work Theresa! Here is the nutritional information: 🍏
+</Text>
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='green'>
                         <Thead>
                             <Tr>
-                                <Th>Nutrition</Th>
+                                <Th fontSize='2xl'> Nutrition</Th>
                                 <Th></Th>
                             </Tr>
                         </Thead>
-                        <Tbody>
+                        <Tbody fontSize='2xl'>
                             <Tr>
-                                <Td>Calories</Td>
-                                <Td>332</Td>
+                                <Td fontSize='2xl'>Calories</Td>
+                                <Td fontSize='2xl'>332</Td>
                             </Tr>
                             <Tr>
-                                <Td>Carbs</Td>
-                                <Td>55g</Td>
+                                <Td fontSize='2xl'>Carbs</Td>
+                                <Td fontSize='2xl'>55g</Td>
                             </Tr>
                             <Tr>
-                                <Td>Protein</Td>
-                                <Td>9.4g</Td>
+                                <Td fontSize='2xl'>Protein</Td>
+                                <Td fontSize='2xl'>9.4g</Td>
                             </Tr>
                             <Tr>
-                                <Td>Fats</Td>
-                                <Td>7.8g</Td>
+                                <Td fontSize='2xl'>Fats</Td>
+                                <Td fontSize='2xl'>7.8g</Td>
                             </Tr>
                         </Tbody>
                     </Table>
                 </TableContainer>
+                <Button w="100%" height="100px" size="lg" mt="50px" variant='solid' colorScheme='green' fontSize="4xl" onClick={onCloseExit}>Close</Button>
+
             </Box>
         </Box>
     );
