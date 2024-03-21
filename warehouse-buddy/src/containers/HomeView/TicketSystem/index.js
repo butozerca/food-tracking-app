@@ -2,8 +2,6 @@ import './index.css';
 import { Button, useDisclosure, Flex, Spacer, Divider } from '@chakra-ui/react'
 
 import{Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from '@chakra-ui/react'
-import { Textarea } from '@chakra-ui/react'
-import { Select } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux';
 import { sendTicket } from '../../../redux/openai_api/actions';
 import React, { useState, useCallback, useRef } from 'react';
@@ -13,21 +11,6 @@ import Webcam from "react-webcam"
 export const TicketSystem = () => {
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [issue, setIssue] = useState('');
-
-    const handleChange = (event) => {
-        setSelectedCategory(event.target.value);
-    }
-
-    const handleChangeInput = (event) => {
-        setIssue(event.target.value);
-    }
-
-    // let categories = ["Bezpieczeństwo", "Załadunek", "Rozładunek", "Czystość i ergonomia", "Lokalizacja w magazynie", "Inne"]
-    // const list = categories.map((el) => {
-    //     return <option value={el} key={el}>{el}</option>;
-    // });
 
     const [img, setImg] = useState(null);
     const webcamRef = useRef(null);
@@ -38,47 +21,58 @@ export const TicketSystem = () => {
         facingMode: "user",
     };
 
-    // randomly mocked each image
-    let user_id = 0 + Math.random() * (1000000 - 0);
-
     const capture = useCallback(() => {
-        const imageSrc = webcamRef.current.getScreenshot();
+        var imageSrc = webcamRef.current.getScreenshot();
+        if (!imageSrc) imageSrc = "https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_3x2.jpg?w=1436&h=958"
+
         setImg(imageSrc);
 
-        let apiUrl = 'http://localhost:5000/save_image';
-        let imageData = imageSrc.replace(/^data:image\/png;base64,/, '');
-        let req = {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'No-Auth': 'True'
-        },
-        body: JSON.stringify({ image_data: imageData, id: user_id }),
-        }
-        user_id = user_id + 1;
-        fetch(apiUrl, req)
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        console.log("image taken!")
     }, [webcamRef]);
 
-    const onSend = () => {
-            // Send data to the backend via POST
-            let new_ticket = {
-                "category": selectedCategory,
-                "description": issue
-            }
+    const [recorder, setRecorder] = useState(null);
+    const [audio, setAudio] = useState(null);
+    const [transcription, setTranscription] = useState(null);
 
-            setIssue('');
+    const toggleRecording = useCallback(() => {
+        if (!recorder) {
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+                const newRecorder = new MediaRecorder(stream);
+                setRecorder(newRecorder);
+                newRecorder.start();
 
-            dispatch(sendTicket(new_ticket));
-            onClose();
-    }
+                newRecorder.ondataavailable = e => {
+                    console.log("data: " + e.data)
+                    const url = URL.createObjectURL(e.data);
+                    console.log("audio in " + url)
+                    setAudio(url);
+                }
+            })
+        } else {
+            recorder.stop();
+            recorder.stream.getTracks().forEach(i => i.stop()) // Removes the recording red dot in chrome after finishing.
+            setRecorder(null);
+
+            fetch('http://127.0.0.1:5000/transcribe', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    url: audio,
+                })
+            })
+            .catch(error => {
+                console.log("error " + error)
+                setTranscription("Transcription will look like this (err)")
+            })
+            .then(response => {
+                console.log("response: " + response)
+                setTranscription("Transcription will look like this (demo)")
+            });
+        }
+    }, [recorder]);
 
     return (
         <div class="ticket-system-container">
@@ -108,22 +102,25 @@ export const TicketSystem = () => {
                             ) : (
                                 <>
                                 <img src={img} alt="screenshot" />
-                                <div class="photo-button">
-                                    <Button class="listen-button" onClick={() => setImg(null)}><div class="button"><div class="dot-pulse"></div></div><div class="button">Done</div></Button>
-                                </div>
+                                {
+                                    audio == null ? (
+                                        <div class="photo-button">
+                                            <Button class="listen-button" onClick={toggleRecording}>
+                                                <div class="button">
+                                                    <div class="dot-pulse"/>
+                                                </div>
+                                                <div class="button">Listen!</div>
+                                            </Button>
+                                        </div>
+                                    ): (
+                                        <audio src={audio} controls />
+                                    )
+                                }
                                 </>
                             )}
                         </div>
-                        {/* <Select class="select-ticket-type" placeholder='Wybierz kategorię zgłoszenia'onChange={handleChange} value={selectedCategory}>
-                            {list}
-                        </Select>  */}
-                        {/* <Divider id="ticket-divider"/>  
-                        <Textarea placeholder='Write your description here.' size='md' h='calc(20vh)' onChange={handleChangeInput} value={issue}/> */}
                     </ModalBody>
                     <ModalFooter>
-                        {/* <Button colorScheme='facebook' mr={3} onClick={capture}>
-                            Picture
-                        </Button> */}
                     </ModalFooter>
                 </ModalContent>
             </Modal>
