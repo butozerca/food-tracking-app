@@ -3,7 +3,7 @@ import { Button, useDisclosure, Flex, Box, Center, Spacer } from '@chakra-ui/rea
 import { Stack } from '@chakra-ui/layout'
 
 import{IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react'
-import { Textarea } from '@chakra-ui/react'
+import { Textarea, Avatar, Heading, CardHeader } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux';
 import { sendTicket } from '../../../redux/openai_api/actions';
@@ -163,7 +163,12 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
             <Modal size="full" isOpen={isOpen} onClose={onExit}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalCloseButton size="lg" />
+                    <ModalHeader backgroundColor='green.500' paddingTop={5}>
+                        <Flex direction='row' justifyContent={'space-between'}>
+                            <Heading marginBottom={-10} fontSize={35} color='gray.50' >VitalEaty 🍎</Heading>
+                            <Avatar size='md' name='Anna Stawiska' />
+                        </Flex>
+                    </ModalHeader>
                     <ModalBody>
                         <div class="webcam-container">
                             {congrats === null ? (
