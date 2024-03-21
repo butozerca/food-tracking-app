@@ -159,7 +159,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
 
     return (
         <div class="ticket-system-container">
-            <Button id="ticket-button" onClick={onOpen} colorScheme="red" variant="solid">{mealType}</Button>
+            <Button id="ticket-button" onClick={onOpen} colorScheme="yellow" variant="solid">{mealType}</Button>
             <Modal size="full" isOpen={isOpen} onClose={onExit}>
                 <ModalOverlay />
                 <ModalContent>

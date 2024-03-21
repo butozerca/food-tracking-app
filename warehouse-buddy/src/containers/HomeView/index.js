@@ -49,38 +49,36 @@ export const HomeView = ({tasks}) => {
     };    
 
     // Generate an array for the amount of water drank (FaDroplet icons)
-    const waterDoneIcons = [...Array(countWaterDone)].map((_, index) => (<Icon key={`done-${index}`} as={FaDroplet} color='blue.500' boxSize={6}/>));
+    const waterDoneIcons = [...Array(countWaterDone)].map((_, index) => (<Icon key={`done-${index}`} as={FaDroplet} color='blue.500' boxSize={8}/>));
 
     // Generate an array for the remaining water (CiDroplet icons)
-    const waterRemainingIcons = [...Array(waterTotal - countWaterDone)].map((_, index) => (<Icon key={`remaining-${index}`} as={CiDroplet} color='blue.500' boxSize={6}/>));
+    const waterRemainingIcons = [...Array(waterTotal - countWaterDone)].map((_, index) => (<Icon key={`remaining-${index}`} as={CiDroplet} color='blue.500' boxSize={8}/>));
 
     return (
         <Card overflow='hidden' variant='outline' h="100vh" w="100vw">
-            <CardHeader>
-                <Flex direction='row' justifyContent={'end'}>
-                <WrapItem>
-                    <Avatar size='md' name='' />
-                </WrapItem>
+            <CardHeader backgroundColor='green.500' height={20}>
+                <Flex direction='row' justifyContent={'space-between'}>
+                    <Heading marginBottom={8} fontSize={35} color='gray.50' >VitalEaty 🍎</Heading>
+                    <Avatar size='md' name='Anna Stawiska' />
                 </Flex>
-                <Heading marginBottom={8} fontSize={35} >Vitaleaty 🍏</Heading>
-                <Divider/>
             </CardHeader>
+            <Divider/>
             <CardBody>
-                <Container marginBottom={4} marginTop={-6}>
+                <Container marginBottom={4}>
                     <Stack spacing={5}>
                         <Box width="100%">
                             <Heading size='md' marginBottom={3}>
-                                Your current calorie intake: {countCalorieDone} / {calorieTotal}
+                                Your daily calorie intake: {countCalorieDone} / {calorieTotal}
                             </Heading>
-                            <Progress hasStripe value={countCalorieDone/calorieTotal * 100}  />
+                            <Progress hasStripe value={countCalorieDone/calorieTotal * 100} height={5} borderWidth={3}/>
                         </Box>
-                        <HStack>
+                        <HStack spacing={3}>
                             {waterDoneIcons}
                             {waterRemainingIcons}
                         </HStack>
                     </Stack>
                 </Container>
-                <Divider  marginBottom={9}/>
+                <Divider  marginBottom={14}/>
                 <Stack spacing={4} marginTop={15} marginBottom={-15}>
                     <Flex direction='row' justifyContent='center'>
                         <Button colorScheme='blue' variant='solid' fontSize={60} onClick={handleWaterClick} width="83%" h="150px">
