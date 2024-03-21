@@ -8,21 +8,21 @@ import { ChakraProvider } from '@chakra-ui/react'
 const App = () => {
     const [tasks, setTasks] = useState([])
 
-    const fetchTaskData = () => {
-        fetch("http://localhost:5000/tasks")
-          .then(response => {
-            return response.json()
-          })
-          .then(data => {
-            setTasks(data); 
-          })
-    }
+    // const fetchTaskData = () => {
+    //     fetch("http://localhost:5000/tasks")
+    //       .then(response => {
+    //         return response.json()
+    //       })
+    //       .then(data => {
+    //         setTasks(data); 
+    //       })
+    // }
 
-    useEffect(() => {
-        fetchTaskData()
-    }, [])
+    // useEffect(() => {
+    //     fetchTaskData()
+    // }, [])
 
-    console.log(tasks);
+    // console.log(tasks);
 
     return (
         <ChakraProvider>
