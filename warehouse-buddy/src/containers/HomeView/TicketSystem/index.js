@@ -167,9 +167,12 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                 <>
                                 {img === null ? (
                                     <>
+                                    <div class="plate-overlay"></div>
+                                    <div class="webcam-box">
                                         <Webcam
                                             audio={false}
                                             mirrored={true}
+
                                             height={400}
                                             width={400}
                                             ref={webcamRef}
@@ -182,6 +185,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                                 <div class="button"><bf>Capture</bf></div>
                                             </Button>
                                         </div>
+                                    </div>
                                     </>
                                 ) : (
                                     <>
@@ -189,6 +193,9 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                     <div class="photo">
                                         <img src={img} alt="screenshot" />
                                         <div class="centered"><div class="dot-pulse"></div></div>
+                                    </div>
+                                    <div class="photo-button">
+                                        <Button class="capture-button" onClick={capture}><div class="button">Capture</div></Button>
                                     </div>
                                     <div class="photo-button">
                                         <Button class="listen-button" onClick={sendData}><div class="button"><bf>Done</bf></div></Button>
