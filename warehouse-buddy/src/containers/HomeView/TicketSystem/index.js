@@ -14,7 +14,8 @@ import { Congrats } from './Congrats/congrats';
 import { useSpeechRecognition } from 'react-speech-kit';
 import { IoEarOutline } from "react-icons/io5";
 import { FaQuestion } from "react-icons/fa";
-import { CheckIcon } from '@chakra-ui/icons'
+import { IoCamera } from "react-icons/io5";
+import { Heading } from '@chakra-ui/react'
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
@@ -170,6 +171,13 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                 <>
                                 {img === null ? (
                                     <Stack direction='column'>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <Heading>Take a photo of your meal</Heading>
+                                        <br/>
                                         <Box>
                                             <Webcam
                                                 audio={false}
@@ -183,15 +191,17 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                         </Box>
                                         <div id="plate"></div>
                                         <Spacer />
-                                        <Center alignItems='center'>
+                                        <br/>
+                                        <Center alignItems='center' height={20}>
                                             <IconButton
-                                                    isRound={true}
                                                     variant='solid'
                                                     colorScheme='green'
-                                                    fontSize='28px'
+                                                    fontSize='60px'
                                                     size='lg'
+                                                    width="100%"
+                                                    height="100px"
                                                     onClick={capture}
-                                                    icon={<CheckIcon />}
+                                                    icon={<IoCamera />}
                                             />
                                         </Center>
                                     </Stack>
