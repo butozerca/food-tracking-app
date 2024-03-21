@@ -160,9 +160,10 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
     return (
         <div class="ticket-system-container">
             <Button id="ticket-button" onClick={onOpen} colorScheme="red" variant="solid">{mealType}</Button>
-            <Modal isOpen={isOpen} size={'full'} onClose={onExit}>
+            <Modal size="full" isOpen={isOpen} onClose={onExit}>
                 <ModalOverlay />
                 <ModalContent>
+                    <ModalCloseButton size="lg" />
                     <ModalBody>
                         <div class="webcam-container">
                             {congrats === null ? (
@@ -197,48 +198,51 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                 ) : (
                                     <Box h="100%" w="100%">
                                         <Flex
+                                        mt="15px"
                                         height="100%" // Adjust this value as needed to fill the desired area
                                         width="100%" // Adjust this value as needed to fill the desired area
                                         justifyContent="center"
                                         alignItems="center"
-                                        marginBottom="15px"
+                                        mb="15px"
                                         >
-                                            <IoEarOutline className="pulse" style={{ height: '150px', width: '150px' }} />
+                                            <IoEarOutline  className="pulse" style={{ height: '150px', width: '150px' }} />
                                         </Flex>
                                         <Popover >
                                         <PopoverTrigger>
-                                            <Button colorScheme='teal'>
+                                            <Button colorScheme='green' size="lg" mt="40px" mb="10px">
                                                 <FaQuestion />
                                             </Button>
                                         </PopoverTrigger>
-                                        <PopoverContent>
+                                        <PopoverContent >
                                             <PopoverArrow />
                                             <PopoverCloseButton />
-                                            <PopoverBody borderWidth="2px" borderColor='gray.400' bg='gray.50'>Today I made just a pasta with tomato sauce and a spoon of cheese on top</PopoverBody>
+                                            <PopoverBody fontSize="3xl" borderWidth="2px" borderColor='gray.400' bg='gray.200'>Today I made just a pasta with tomato sauce and a spoon of cheese on top</PopoverBody>
                                         </PopoverContent>
                                         </Popover>
                                         
                                         <Textarea
-                                            mt="5px"
+                                            mt="10px"
                                             placeholder='Describe your meal'
-                                            size='sm'
+                                            size="lg"
+                                            height="200px"
+                                            fontSize="3xl"
                                             class="recorded-text"
                                             value={recordTextValue}
                                             onChange={(event) => setRecordTextValue(event.target.value)}
                                             w="100%"
                                         />       
-                                        <Button mt="10px" variant='solid' colorScheme='teal' w="100%" onClick={sendData}>
-                                            I finished describing my meal                                        
+                                        <Button lineBreak="anywhere" fontSize="4xl" size="lg" mt="50px" variant='solid' colorScheme='green' w="100%" height="100px" onClick={sendData}>
+                                            Finished                                     
                                         </Button>                                     
                                     </Box>
                             
                             )} </> ) : (
-                                Congrats()
+                                <Congrats onCloseExit={onExit}/>
                             )}
-                        </div>
-                       
+                        </div>                       
                     </ModalBody>
                 </ModalContent>
+                
             </Modal>
         </div>
     );
