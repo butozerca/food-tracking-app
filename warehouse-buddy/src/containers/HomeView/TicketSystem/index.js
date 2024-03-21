@@ -1,7 +1,7 @@
 import './index.css';
-import { Button, useDisclosure, Flex, Spacer, Divider } from '@chakra-ui/react'
+import { Button, useDisclosure, Flex, Spacer, Divider, Box, Card } from '@chakra-ui/react'
 
-import{Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from '@chakra-ui/react'
+import{Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +11,8 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Webcam from "react-webcam"
 import { Congrats } from './Congrats/congrats';
 import { useSpeechRecognition } from 'react-speech-kit';
+import { IoEarOutline } from "react-icons/io5";
+import { FaQuestion } from "react-icons/fa";
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
@@ -163,7 +165,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                     {/* <ModalCloseButton /> */}
                     <ModalBody>
                         <div className="webcam-container">
-                            {congrats === null ? (
+                            { congrats === null ? (
                                 <>
                                 {img === null ? (
                                     <>
@@ -188,41 +190,51 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                     </div>
                                     </>
                                 ) : (
-                                    <>
-                                    
-                                    <div class="photo">
-                                        <img src={img} alt="screenshot" />
-                                        <div class="centered"><div class="dot-pulse"></div></div>
-                                    </div>
-                                    <div class="photo-button">
-                                        <Button class="capture-button" onClick={capture}><div class="button">Capture</div></Button>
-                                    </div>
-                                    <div class="photo-button">
-                                        <Button class="listen-button" onClick={sendData}><div class="button"><bf>Done</bf></div></Button>
-                                    </div>
-                                    <div>
-                                        <textarea class="recorded-text"
-                                        value={recordTextValue}
-                                        onChange={(event) => setRecordTextValue(event.target.value)}
-                                        />
-                                    </div>
-                                    </>
-                                )}
-                                </>
-                            ) : (
+                                    <Box h="100%" w="100%">
+                                        <Flex
+                                        height="100%" // Adjust this value as needed to fill the desired area
+                                        width="100%" // Adjust this value as needed to fill the desired area
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        marginBottom="15px"
+                                        >
+                                            <IoEarOutline className="pulse" style={{ height: '150px', width: '150px' }} />
+                                        </Flex>
+                                        <Popover >
+                                        <PopoverTrigger>
+                                            <Button colorScheme='teal'>
+                                                <FaQuestion />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent>
+                                            <PopoverArrow />
+                                            <PopoverCloseButton />
+                                            <PopoverBody borderWidth="2px" borderColor='gray.400' bg='gray.50'>Today I made just a pasta with tomato sauce and a spoon of cheese on top</PopoverBody>
+                                        </PopoverContent>
+                                        </Popover>
+                                        
+                                        <Textarea
+                                            mt="5px"
+                                            placeholder='Describe your meal'
+                                            size='sm'
+                                            class="recorded-text"
+                                            value={recordTextValue}
+                                            onChange={(event) => setRecordTextValue(event.target.value)}
+                                            w="100%"
+                                        />       
+                                        <Button mt="10px" variant='solid' colorScheme='teal' w="100%" onClick={sendData}>
+                                            I finished describing my meal                                        
+                                        </Button>                                     
+                                    </Box>
+                            
+                            )} </> ) : (
                                 Congrats()
                             )}
                         </div>
-                        {/* <Select class="select-ticket-type" placeholder='Wybierz kategorię zgłoszenia'onChange={handleChange} value={selectedCategory}>
-                            {list}
-                        </Select>  */}
-                        {/* <Divider id="ticket-divider"/>  
-                        <Textarea placeholder='Write your description here<div class="dot-pulse"></div></div>.' size='md' h='calc(20vh)' onChange={handleChangeInput} value={issue}/> */}
+                       
                     </ModalBody>
                     <ModalFooter>
-                        {/* <Button colorScheme='facebook' mr={3} onClick={capture}>
-                            Picture
-                        </Button> */}
+                       
                     </ModalFooter>
                 </ModalContent>
             </Modal>

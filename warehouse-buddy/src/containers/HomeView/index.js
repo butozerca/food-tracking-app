@@ -73,14 +73,15 @@ export const HomeView = ({tasks}) => {
             </CardBody>
             <CardFooter>
                 <Stack spacing={2}>
+                <Heading size='md'>
+                    </Heading>
                     <HStack>
                         {waterDoneIcons}
                         {waterRemainingIcons}
                     </HStack>
-                    <Heading size='md'>
-                        Your current calorie intake: {countCalorieDone} / {calorieTotal}
-                    </Heading>
-                    <Progress hasStripe value={countCalorieDone/calorieTotal * 100}  />
+                   
+                    <Progress hasStripe value={countCalorieDone/calorieTotal * 100}  /> 
+                    {calorieTotal}
                 </Stack>
             </CardFooter>
         </Card>
