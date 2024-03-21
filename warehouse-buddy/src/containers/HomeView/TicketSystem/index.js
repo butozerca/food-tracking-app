@@ -1,7 +1,8 @@
 import './index.css';
-import { Button, useDisclosure, Flex, Spacer, Divider } from '@chakra-ui/react'
+import { Button, useDisclosure, Flex, Box, Center, Spacer } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/layout'
 
-import{Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton} from '@chakra-ui/react'
+import{IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +12,9 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Webcam from "react-webcam"
 import { Congrats } from './Congrats/congrats';
 import { useSpeechRecognition } from 'react-speech-kit';
+import { IoEarOutline } from "react-icons/io5";
+import { FaQuestion } from "react-icons/fa";
+import { CheckIcon } from '@chakra-ui/icons'
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
@@ -156,75 +160,89 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
     return (
         <div class="ticket-system-container">
             <Button id="ticket-button" onClick={onOpen} colorScheme="red" variant="solid">{mealType}</Button>
-            <Modal isOpen={isOpen} onClose={onExit}>
+            <Modal size="full" isOpen={isOpen} onClose={onExit}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader />
-                    {/* <ModalCloseButton /> */}
+                    <ModalCloseButton size="lg" />
                     <ModalBody>
-                        <div className="webcam-container">
+                        <div class="webcam-container">
                             {congrats === null ? (
                                 <>
                                 {img === null ? (
-                                    <>
-                                    <div class="plate-overlay"></div>
-                                    <div class="webcam-box">
-                                        <Webcam
-                                            audio={false}
-                                            mirrored={true}
-
-                                            height={400}
-                                            width={400}
-                                            ref={webcamRef}
-                                            screenshotFormat="image/jpeg"
-                                            videoConstraints={videoConstraints}
-                                        />
-                                        <div class="photo-button">
-                                            <Button class="capture-button"
-                                                    onClick={capture}>
-                                                <div class="button"><bf>Capture</bf></div>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    </>
+                                    <Stack direction='column'>
+                                        <Box>
+                                            <Webcam
+                                                audio={false}
+                                                mirrored={true}
+                                                height={'100%'}
+                                                width={'100%'}
+                                                ref={webcamRef}
+                                                screenshotFormat="image/jpeg"
+                                                videoConstraints={videoConstraints}
+                                            />
+                                        </Box>
+                                        <div id="plate"></div>
+                                        <Spacer />
+                                        <Center alignItems='center'>
+                                            <IconButton
+                                                    isRound={true}
+                                                    variant='solid'
+                                                    colorScheme='green'
+                                                    fontSize='28px'
+                                                    size='lg'
+                                                    onClick={capture}
+                                                    icon={<CheckIcon />}
+                                            />
+                                        </Center>
+                                    </Stack>
                                 ) : (
-                                    <>
-                                    
-                                    <div class="photo">
-                                        <img src={img} alt="screenshot" />
-                                        <div class="centered"><div class="dot-pulse"></div></div>
-                                    </div>
-                                    <div class="photo-button">
-                                        <Button class="capture-button" onClick={capture}><div class="button">Capture</div></Button>
-                                    </div>
-                                    <div class="photo-button">
-                                        <Button class="listen-button" onClick={sendData}><div class="button"><bf>Done</bf></div></Button>
-                                    </div>
-                                    <div>
-                                        <textarea class="recorded-text"
-                                        value={recordTextValue}
-                                        onChange={(event) => setRecordTextValue(event.target.value)}
-                                        />
-                                    </div>
-                                    </>
-                                )}
-                                </>
-                            ) : (
-                                Congrats()
+                                    <Box h="100%" w="100%">
+                                        <Flex
+                                        mt="15px"
+                                        height="100%" // Adjust this value as needed to fill the desired area
+                                        width="100%" // Adjust this value as needed to fill the desired area
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        mb="15px"
+                                        >
+                                            <IoEarOutline  className="pulse" style={{ height: '150px', width: '150px' }} />
+                                        </Flex>
+                                        <Popover >
+                                        <PopoverTrigger>
+                                            <Button colorScheme='green' size="lg" mt="40px" mb="10px">
+                                                <FaQuestion />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent >
+                                            <PopoverArrow />
+                                            <PopoverCloseButton />
+                                            <PopoverBody fontSize="3xl" borderWidth="2px" borderColor='gray.400' bg='gray.200'>Today I made just a pasta with tomato sauce and a spoon of cheese on top</PopoverBody>
+                                        </PopoverContent>
+                                        </Popover>
+                                        
+                                        <Textarea
+                                            mt="10px"
+                                            placeholder='Describe your meal'
+                                            size="lg"
+                                            height="200px"
+                                            fontSize="3xl"
+                                            class="recorded-text"
+                                            value={recordTextValue}
+                                            onChange={(event) => setRecordTextValue(event.target.value)}
+                                            w="100%"
+                                        />       
+                                        <Button lineBreak="anywhere" fontSize="4xl" size="lg" mt="50px" variant='solid' colorScheme='green' w="100%" height="100px" onClick={sendData}>
+                                            Finished                                     
+                                        </Button>                                     
+                                    </Box>
+                            
+                            )} </> ) : (
+                                <Congrats onCloseExit={onExit}/>
                             )}
-                        </div>
-                        {/* <Select class="select-ticket-type" placeholder='Wybierz kategorię zgłoszenia'onChange={handleChange} value={selectedCategory}>
-                            {list}
-                        </Select>  */}
-                        {/* <Divider id="ticket-divider"/>  
-                        <Textarea placeholder='Write your description here<div class="dot-pulse"></div></div>.' size='md' h='calc(20vh)' onChange={handleChangeInput} value={issue}/> */}
+                        </div>                       
                     </ModalBody>
-                    <ModalFooter>
-                        {/* <Button colorScheme='facebook' mr={3} onClick={capture}>
-                            Picture
-                        </Button> */}
-                    </ModalFooter>
                 </ModalContent>
+                
             </Modal>
         </div>
     );

@@ -1,13 +1,13 @@
-.home-view-container {
+/* .home-view-container {
     padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 60rem;
     background-color: rgb(235, 241, 241); /* rgb(241, 243, 243);*/
-}
+/* } */
 
-.chat-container {
+/* .chat-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,4 +24,4 @@
     height: 1px;
     background-color: rgb(114, 109, 109);
     margin: 1rem 0;
-}
+} */ 
