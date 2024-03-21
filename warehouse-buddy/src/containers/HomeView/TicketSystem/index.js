@@ -6,6 +6,7 @@ import {
     Spacer,
     Divider,
     Card,
+    Box,
     CardBody
 } from '@chakra-ui/react'
 
@@ -67,8 +68,7 @@ export const TicketSystem = ({mealType}) => {
     }
 
     return (
-        <Card >
-            <CardBody>
+        <Box >
                 <Button
                     id="ticket-button"
                     onClick={onOpen}
@@ -105,7 +105,6 @@ export const TicketSystem = ({mealType}) => {
                         </ModalFooter>
                     </ModalContent>
                 </Modal>
-            </CardBody>
-        </Card>
+        </Box>
     );
 }

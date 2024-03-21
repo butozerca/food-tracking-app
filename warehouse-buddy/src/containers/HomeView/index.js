@@ -10,11 +10,14 @@ import {
     Card,
     CardBody,
     CardHeader,
+    Container,
     CardFooter,
     Heading,
     Divider,
     Stack,
     Text,
+    Spacer,
+    Flex,
     Box
 } from '@chakra-ui/react'
 
@@ -23,29 +26,28 @@ import {TicketSystem} from './TicketSystem';
 
 export const HomeView = ({tasks}) => {
     return (
-        <Card overflow='hidden' variant='outline' >
+        <Card overflow='hidden' variant='outline' h="100vh" w="100vw">
             <CardHeader>
                 <Heading size='md'>Your diet</Heading>
             </CardHeader>
             <CardBody>
                 <Stack spacing={4}>
-                    <Card direction='row' justifyContent="space-around">
-                        <Card>
-                            <CardBody>
-                                <Button id="ticket-button" colorScheme='blue' variant='solid' size='lg'>Water!</Button>
-                            </CardBody>
-                        </Card>
+                    <Flex direction='row'>
+                        <Button id="ticket-button" colorScheme='blue' variant='solid' size='lg'>Water!</Button>
+                        <Spacer/>
                         <TicketSystem mealType={"snack"}/>
-                    </Card>
+                    </Flex>
                     <TicketSystem mealType={"Add a meal"}/>
                 </Stack>
             </CardBody>
             <CardFooter>
-                <Text>
-                    Water: 5 / 8</Text>
-                <br/>
-                <Text>
-                    Your calorie intake: 1200 / 1700</Text>
+                <Stack spacing={2}>
+                    <Text>
+                        Water: 5 / 8</Text>
+                    <br/>
+                    <Text>
+                        Your calorie intake: 1200 / 1700</Text>
+                </Stack>
             </CardFooter>
         </Card>
     );
