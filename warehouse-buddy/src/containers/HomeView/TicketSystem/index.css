@@ -28,14 +28,17 @@
     justify-content: center;
 
     margin: 0.4em;
-    margin-bottom: 1.5em;;
+    margin-top: 2.25em;;
+    /* margin-bottom: 1.5em;; */
 }
 
 .capture-button {
     width: 70%;
     height: 4.5em;
-
+    
     background-color: blue;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.8);
 }
 
 .listen-button {
@@ -43,6 +46,8 @@
     height: 4.5em;
 
     background-color: rgb(255, 179, 0);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 rgba(29, 29, 29, 0.8);
 }
 
 .button {

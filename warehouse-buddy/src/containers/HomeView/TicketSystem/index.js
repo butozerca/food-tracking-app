@@ -41,6 +41,22 @@ export const TicketSystem = () => {
     // randomly mocked each image
     let user_id = 0 + Math.random() * (1000000 - 0);
 
+    // show congrats message
+    const [congrats, setCongrats] = useState(null)
+
+    const sendData = () => {
+        // let new_ticket = {
+        //     "category": selectedCategory,
+        //     "description": issue
+        // }
+
+        // setIssue('');
+
+        // dispatch(sendTicket(new_ticket));
+        // onClose();
+        setCongrats(true);
+    }
+
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImg(imageSrc);
@@ -80,37 +96,55 @@ export const TicketSystem = () => {
             onClose();
     }
 
+    const onExit = () => {
+        setCongrats(null);
+        setImg(null);
+        onClose();
+    }
+
     return (
         <div class="ticket-system-container">
             <Button id="ticket-button" onClick={onOpen} colorScheme="red" variant="solid">Report Issue</Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onExit}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader />
-                    <ModalCloseButton />
+                    {/* <ModalCloseButton /> */}
                     <ModalBody>
                         <div className="webcam-container">
-                            {img === null ? (
+                            {congrats === null ? (
                                 <>
-                                    <Webcam
-                                        audio={false}
-                                        mirrored={true}
-                                        height={400}
-                                        width={400}
-                                        ref={webcamRef}
-                                        screenshotFormat="image/jpeg"
-                                        videoConstraints={videoConstraints}
-                                    />
+                                {img === null ? (
+                                    <>
+                                        <Webcam
+                                            audio={false}
+                                            mirrored={true}
+                                            height={400}
+                                            width={400}
+                                            ref={webcamRef}
+                                            screenshotFormat="image/jpeg"
+                                            videoConstraints={videoConstraints}
+                                        />
+                                        <div class="photo-button">
+                                            <Button class="capture-button"
+                                                    onClick={capture}>
+                                                <div class="button"><bf>Capture</bf></div>
+                                            </Button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                    <img src={img} alt="screenshot" />
                                     <div class="photo-button">
-                                        <Button class="capture-button" onClick={capture}><div class="button">Capture</div></Button>
+                                        <Button class="listen-button" onClick={sendData}><div class="button"><bf>Done</bf></div></Button>
                                     </div>
+                                    </>
+                                )}
                                 </>
                             ) : (
                                 <>
-                                <img src={img} alt="screenshot" />
-                                <div class="photo-button">
-                                    <Button class="listen-button" onClick={() => setImg(null)}><div class="button"><div class="dot-pulse"></div></div><div class="button">Done</div></Button>
-                                </div>
+                                    <div class="congrats">Congrats! You have successfully reported an issue.
+                                    </div>
                                 </>
                             )}
                         </div>
@@ -118,7 +152,7 @@ export const TicketSystem = () => {
                             {list}
                         </Select>  */}
                         {/* <Divider id="ticket-divider"/>  
-                        <Textarea placeholder='Write your description here.' size='md' h='calc(20vh)' onChange={handleChangeInput} value={issue}/> */}
+                        <Textarea placeholder='Write your description here<div class="dot-pulse"></div></div>.' size='md' h='calc(20vh)' onChange={handleChangeInput} value={issue}/> */}
                     </ModalBody>
                     <ModalFooter>
                         {/* <Button colorScheme='facebook' mr={3} onClick={capture}>
