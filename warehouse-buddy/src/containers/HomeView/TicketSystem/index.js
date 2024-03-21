@@ -10,6 +10,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
 import { useSpeechRecognition } from 'react-speech-kit';
+import { IoEarOutline } from "react-icons/io5";
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
@@ -152,18 +153,28 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                     <>
                                     
                                     <div class="photo">
-                                        <img src={img} alt="screenshot" />
-                                        <div class="centered"><div class="dot-pulse"></div></div>
+
+                                        <Flex
+                                        height="100%" // Adjust this value as needed to fill the desired area
+                                        width="100%" // Adjust this value as needed to fill the desired area
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        marginBottom="15px"
+                                        >
+                                            <IoEarOutline className="pulse" style={{ height: '150px', width: '150px' }} />
+                                        </Flex>
                                     </div>
-                                    <div class="photo-button">
-                                        <Button class="listen-button" onClick={sendData}><div class="button"><bf>Done</bf></div></Button>
-                                    </div>
-                                    <div>
-                                        <textarea class="recorded-text"
+
+                                    <Textarea
+                                        placeholder='Here is your meal description'
+                                        size='sm'
+                                        class="recorded-text"
                                         value={recordTextValue}
                                         onChange={(event) => setRecordTextValue(event.target.value)}
-                                        />
-                                    </div>
+                                    />       
+                                    <div class="photo-button">
+                                        <Button class="listen-button" onClick={sendData}><div class="button"><bf>I finished describing my meal</bf></div></Button>
+                                    </div>                                
                                     </>
                                 )}
                                 </>
