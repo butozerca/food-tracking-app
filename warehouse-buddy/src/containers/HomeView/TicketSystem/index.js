@@ -80,15 +80,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
     }, [congrats]);
 
     useEffect(() => {
-        if (img === true) {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = "Hello! Please hold your phone over the plate, and press Capture when the plate fills the circle.";
-            window.speechSynthesis.speak(msg);
-        }
-    }, [img]);
-
-    useEffect(() => {
-        if (img === false) {
+        if (img !== null) {
             const msg = new SpeechSynthesisUtterance();
             msg.text = "Great picture! Please tell me, what you have on plate? When you're done, press the button Done.";
             window.speechSynthesis.speak(msg);
