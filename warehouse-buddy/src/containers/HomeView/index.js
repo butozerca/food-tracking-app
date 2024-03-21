@@ -20,7 +20,9 @@ import {
     Spacer,
     Flex,
     Box,
-    Progress
+    Progress,
+    Avatar,
+    WrapItem
 } from '@chakra-ui/react'
 import {Icon} from '@chakra-ui/react'
 import {CiDroplet} from "react-icons/ci";
@@ -55,34 +57,48 @@ export const HomeView = ({tasks}) => {
     return (
         <Card overflow='hidden' variant='outline' h="100vh" w="100vw">
             <CardHeader>
-                <Heading size='lg'>Your diet</Heading>
+                <Flex direction='row' justifyContent={'end'}>
+                <WrapItem>
+                    <Avatar size='md' name='' />
+                </WrapItem>
+                </Flex>
+                <Heading marginBottom={8} fontSize={35} >Vitaleaty 🍏</Heading>
+                <Divider/>
             </CardHeader>
             <CardBody>
-                <Stack spacing={4}>
-                    <Flex direction='row'>
-                        <Button id="ticket-button" colorScheme='blue' variant='solid' size='lg' onClick={handleWaterClick} h="70px"  // Add onClick handler here
-                        >
-                            <CiGlass boxSize="20px"/>
-                            Water!</Button>
-                        <Spacer/>
-                        {/* Submitting a photo of the food currently increases always by 350 calories */}
-                        <TicketSystem mealType={"snack"} increaseCalorie={increaseCalorieCount}/>
+                <Container marginBottom={4} marginTop={-6}>
+                    <Stack spacing={5}>
+                        <Box width="100%">
+                            <Heading size='md' marginBottom={3}>
+                                Your current calorie intake: {countCalorieDone} / {calorieTotal}
+                            </Heading>
+                            <Progress hasStripe value={countCalorieDone/calorieTotal * 100}  />
+                        </Box>
+                        <HStack>
+                            {waterDoneIcons}
+                            {waterRemainingIcons}
+                        </HStack>
+                    </Stack>
+                </Container>
+                <Divider  marginBottom={9}/>
+                <Stack spacing={4} marginTop={15} marginBottom={-15}>
+                    <Flex direction='row' justifyContent='center'>
+                        <Button colorScheme='blue' variant='solid' fontSize={60} onClick={handleWaterClick} width="83%" h="150px">
+                            💧+
+                        </Button>
                     </Flex>
-                    <TicketSystem mealType={"Add a meal"} increaseCalorie={increaseCalorieCount}/>
+                        {/* <Spacer/> */}
+                        {/* Submitting a photo of the food currently increases always by 350 calories */}
+                        {/* <TicketSystem mealType={"snack"} increaseCalorie={increaseCalorieCount}/> */}
+                    <Flex direction='row' justifyContent='center'>
+                        <TicketSystem mealType={"🍽️"} increaseCalorie={increaseCalorieCount}/>
+                    </Flex>
                 </Stack>
             </CardBody>
             <CardFooter>
-                <Stack spacing={2}>
-                <Heading size='md'>
-                    </Heading>
-                    <HStack>
-                        {waterDoneIcons}
-                        {waterRemainingIcons}
-                    </HStack>
-                   
-                    <Progress hasStripe value={countCalorieDone/calorieTotal * 100}  /> 
-                    {calorieTotal}
-                </Stack>
+                <Button colorScheme='gray' variant='solid' fontSize={50} width="80px" h="80px">
+                    📊
+                </Button>
             </CardFooter>
         </Card>
     );
