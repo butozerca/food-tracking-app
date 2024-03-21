@@ -23,10 +23,14 @@ import {Textarea} from '@chakra-ui/react'
 import {Select} from '@chakra-ui/react'
 import {useSelector, useDispatch} from 'react-redux';
 import {sendTicket} from '../../../redux/openai_api/actions';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {WebcamScreenshot} from './WebcameraScreenshot';
 
-export const TicketSystem = ({mealType}) => {
+export const TicketSystem = ({mealType, increaseCalorie }) => {
+    useEffect(() => {
+        console.log(increaseCalorie);
+    }, [increaseCalorie]);
+    
     const dispatch = useDispatch();
     const {isOpen, onOpen, onClose} = useDisclosure()
     const [selectedCategory,
@@ -55,15 +59,12 @@ export const TicketSystem = ({mealType}) => {
     });
 
     const onSend = () => {
-        // Send data to the backend via POST
-        let new_ticket = {
-            "category": selectedCategory,
-            "description": issue
+        if (typeof increaseCalorie === 'function') {
+            increaseCalorie();
+        } else {
+            console.error('increaseCalorie is not a function', increaseCalorie);
         }
 
-        setIssue('');
-
-        dispatch(sendTicket(new_ticket));
         onClose();
     }
 
