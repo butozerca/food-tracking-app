@@ -66,6 +66,10 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
     // show congrats message
     const [congrats, setCongrats] = useState(null);
 
+    const msg = new SpeechSynthesisUtterance();
+    console.log(msg);
+    msg.text = "Welcome to Vitality.";
+
     useEffect(() => {
         if (congrats === true) {
             const msg = new SpeechSynthesisUtterance();
