@@ -15,7 +15,6 @@ import { useSpeechRecognition } from 'react-speech-kit';
 import { IoEarOutline } from "react-icons/io5";
 import { FaQuestion } from "react-icons/fa";
 import { IoCamera } from "react-icons/io5";
-import { Heading } from '@chakra-ui/react'
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
@@ -164,7 +163,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
             <Modal size="full" isOpen={isOpen} onClose={onExit}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader backgroundColor='green.500' paddingTop={5}>
+                    <ModalHeader backgroundColor='green.500' paddingTop={5} marginBottom={5}>
                         <Flex direction='row' justifyContent={'space-between'}>
                             <Heading marginBottom={-10} fontSize={35} color='gray.50' >VitalEaty 🍎</Heading>
                             <Avatar size='md' name='Anna Stawiska' />
@@ -176,11 +175,6 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                 <>
                                 {img === null ? (
                                     <Stack direction='column'>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
                                         <Heading>Take a photo of your meal</Heading>
                                         <br/>
                                         <Box>
@@ -246,7 +240,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                             onChange={(event) => setRecordTextValue(event.target.value)}
                                             w="100%"
                                         />       
-                                        <Button lineBreak="anywhere" fontSize="4xl" size="lg" mt="50px" variant='solid' colorScheme='green' w="100%" height="100px" onClick={sendData}>
+                                        <Button lineBreak="anywhere" fontSize="4xl" size="lg" mt="17px" variant='solid' colorScheme='green' w="100%" height="100px" onClick={sendData}>
                                             Done                                     
                                         </Button>                                     
                                     </Box>
