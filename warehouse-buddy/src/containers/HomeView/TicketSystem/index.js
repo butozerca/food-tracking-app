@@ -9,13 +9,29 @@ import { sendTicket } from '../../../redux/openai_api/actions';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
+import { Congrats } from './Congrats/congrats';
 import { useSpeechRecognition } from 'react-speech-kit';
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
         console.log(increaseCalorie);
     }, [increaseCalorie]);
+
+    useEffect(() => {
+        const handleVoicesChanged = () => {
+            const voices = window.speechSynthesis.getVoices();
+            console.log(voices);
+            // Optionally, find and set the voice you need here
+        };
     
+        window.speechSynthesis.onvoiceschanged = handleVoicesChanged;
+    
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.speechSynthesis.onvoiceschanged = null;
+        };
+    }, []);
+
     const dispatch = useDispatch();
     const {isOpen, onOpen, onClose} = useDisclosure()
     const [selectedCategory,
@@ -49,7 +65,27 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
     let user_id = 0 + Math.random() * (1000000 - 0);
 
     // show congrats message
-    const [congrats, setCongrats] = useState(null)
+    const [congrats, setCongrats] = useState(null);
+
+    const msg = new SpeechSynthesisUtterance();
+    console.log(msg);
+    msg.text = "Welcome to Vitality.";
+
+    useEffect(() => {
+        if (congrats === true) {
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = "Congratulations, thank you very much! Your pasta looks very good, it has enough calories, but you can add more protein next time by adding a fish.";
+            window.speechSynthesis.speak(msg);
+        }
+    }, [congrats]);
+
+    useEffect(() => {
+        if (img !== null) {
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = "Great picture! Please tell me, what you have on plate? When you're done, press the button Done.";
+            window.speechSynthesis.speak(msg);
+        }
+    }, [img]);
 
     const sendData = () => {
         // let new_ticket = {
@@ -73,7 +109,6 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
         setRecordTextValue(result);
       },
     });
-
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
@@ -132,9 +167,12 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                 <>
                                 {img === null ? (
                                     <>
+                                    <div class="plate-overlay"></div>
+                                    <div class="webcam-box">
                                         <Webcam
                                             audio={false}
                                             mirrored={true}
+
                                             height={400}
                                             width={400}
                                             ref={webcamRef}
@@ -147,6 +185,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                                 <div class="button"><bf>Capture</bf></div>
                                             </Button>
                                         </div>
+                                    </div>
                                     </>
                                 ) : (
                                     <>
@@ -154,6 +193,9 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                     <div class="photo">
                                         <img src={img} alt="screenshot" />
                                         <div class="centered"><div class="dot-pulse"></div></div>
+                                    </div>
+                                    <div class="photo-button">
+                                        <Button class="capture-button" onClick={capture}><div class="button">Capture</div></Button>
                                     </div>
                                     <div class="photo-button">
                                         <Button class="listen-button" onClick={sendData}><div class="button"><bf>Done</bf></div></Button>
@@ -168,10 +210,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                 )}
                                 </>
                             ) : (
-                                <>
-                                    <div class="congrats">Congrats! You have successfully reported an issue.
-                                    </div>
-                                </>
+                                Congrats()
                             )}
                         </div>
                         {/* <Select class="select-ticket-type" placeholder='Wybierz kategorię zgłoszenia'onChange={handleChange} value={selectedCategory}>
