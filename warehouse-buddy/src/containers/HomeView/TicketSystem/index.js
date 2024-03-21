@@ -1,7 +1,8 @@
 import './index.css';
-import { Button, useDisclosure, Flex, Spacer, Divider, Box, Card } from '@chakra-ui/react'
+import { Button, useDisclosure, Flex, Box, Center, Spacer } from '@chakra-ui/react'
+import { Stack } from '@chakra-ui/layout'
 
-import{Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react'
+import{IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody} from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +14,7 @@ import { Congrats } from './Congrats/congrats';
 import { useSpeechRecognition } from 'react-speech-kit';
 import { IoEarOutline } from "react-icons/io5";
 import { FaQuestion } from "react-icons/fa";
+import { CheckIcon } from '@chakra-ui/icons'
 
 export const TicketSystem = ({mealType, increaseCalorie }) => {
     useEffect(() => {
@@ -161,34 +163,38 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
             <Modal size="full" isOpen={isOpen} onClose={onExit}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader />
                     <ModalCloseButton size="lg" />
                     <ModalBody>
-                        <div className="webcam-container">
-                            { congrats === null ? (
+                        <div class="webcam-container">
+                            {congrats === null ? (
                                 <>
                                 {img === null ? (
-                                    <>
-                                    <div class="plate-overlay"></div>
-                                    <div class="webcam-box">
-                                        <Webcam
-                                            audio={false}
-                                            mirrored={true}
-
-                                            height={400}
-                                            width={400}
-                                            ref={webcamRef}
-                                            screenshotFormat="image/jpeg"
-                                            videoConstraints={videoConstraints}
-                                        />
-                                        <div class="photo-button">
-                                            <Button class="capture-button"
-                                                    onClick={capture}>
-                                                <div class="button"><bf>Capture</bf></div>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    </>
+                                    <Stack direction='column'>
+                                        <Box>
+                                            <Webcam
+                                                audio={false}
+                                                mirrored={true}
+                                                height={'100%'}
+                                                width={'100%'}
+                                                ref={webcamRef}
+                                                screenshotFormat="image/jpeg"
+                                                videoConstraints={videoConstraints}
+                                            />
+                                        </Box>
+                                        <div id="plate"></div>
+                                        <Spacer />
+                                        <Center alignItems='center'>
+                                            <IconButton
+                                                    isRound={true}
+                                                    variant='solid'
+                                                    colorScheme='green'
+                                                    fontSize='28px'
+                                                    size='lg'
+                                                    onClick={capture}
+                                                    icon={<CheckIcon />}
+                                            />
+                                        </Center>
+                                    </Stack>
                                 ) : (
                                     <Box h="100%" w="100%">
                                         <Flex
@@ -231,17 +237,10 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
                                     </Box>
                             
                             )} </> ) : (
-                                Congrats()
+                                <Congrats onCloseExit={onExit}/>
                             )}
-                        </div>
-
-                        <Button w="100%" height="100px" size="lg" mt="50px" variant='solid' colorScheme='green' fontSize="4xl" onClose={onExit}>Close</Button>
-                       
+                        </div>                       
                     </ModalBody>
-                    <ModalFooter>
-                       
-                    </ModalFooter>
-                   
                 </ModalContent>
                 
             </Modal>
