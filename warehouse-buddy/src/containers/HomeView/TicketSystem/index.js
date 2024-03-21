@@ -2,7 +2,7 @@ import './index.css';
 import { Button, useDisclosure, Flex, Box, Center, Spacer } from '@chakra-ui/react'
 import { Stack } from '@chakra-ui/layout'
 
-import{IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody} from '@chakra-ui/react'
+import{IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react'
 import { Textarea } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import { useSelector, useDispatch } from 'react-redux';
