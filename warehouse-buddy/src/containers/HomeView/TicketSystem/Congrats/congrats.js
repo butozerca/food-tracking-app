@@ -19,13 +19,13 @@ export const Congrats = ({onCloseExit}) => {
                 💕
             </Heading>
             <Box>
-                <Text mb="25px" fontSize='2xl'>Keep up the great work Theresa! Here is the nutritional information: 🍏
+                <Text mb="25px" fontSize='2xl'>Keep up the great work Anna! Here is the nutritional information of your meal: 🍏
 </Text>
                 <TableContainer>
                     <Table variant='striped' colorScheme='green'>
                         <Thead>
                             <Tr>
-                                <Th fontSize='2xl'> Nutrition</Th>
+                                <Th fontSize='2xl'>Nutrition</Th>
                                 <Th></Th>
                             </Tr>
                         </Thead>
