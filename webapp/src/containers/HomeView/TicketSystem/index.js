@@ -5,8 +5,6 @@ import { Stack } from '@chakra-ui/layout'
 import{IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react'
 import { Textarea, Avatar, Heading, CardHeader } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
-import { useSelector, useDispatch } from 'react-redux';
-import { sendTicket } from '../../../redux/openai_api/actions';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
@@ -36,25 +34,7 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
         };
     }, []);
 
-    const dispatch = useDispatch();
     const {isOpen, onOpen, onClose} = useDisclosure()
-    const [selectedCategory,
-        setSelectedCategory] = useState('');
-    const [issue,
-        setIssue] = useState('');
-
-    const handleChange = (event) => {
-        setSelectedCategory(event.target.value);
-    }
-
-    const handleChangeInput = (event) => {
-        setIssue(event.target.value);
-    }
-
-    // let categories = ["Bezpieczeństwo", "Załadunek", "Rozładunek", "Czystość i ergonomia", "Lokalizacja w magazynie", "Inne"]
-    // const list = categories.map((el) => {
-    //     return <option value={el} key={el}>{el}</option>;
-    // });
 
     const [img, setImg] = useState(null);
     const webcamRef = useRef(null);

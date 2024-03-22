@@ -24,7 +24,7 @@ import {FaDroplet} from "react-icons/fa6";
 import './index.css';
 import {TicketSystem} from './TicketSystem';
 
-export const HomeView = ({tasks}) => {
+export const HomeView = () => {
     const [countWaterDone,
         setCountWaterDone] = useState(0); // Fixed: useState should be used with destructuring
     const waterTotal = 8;
