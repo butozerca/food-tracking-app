@@ -72,16 +72,16 @@ export const HomeView = ({tasks}) => {
                             </Heading>
                             <Progress hasStripe value={countCalorieDone/calorieTotal * 100} height={5} borderWidth={3}/>
                         </Box>
-                        <HStack spacing={3}>
+                        <HStack spacing={1}>
                             {waterDoneIcons}
                             {waterRemainingIcons}
                         </HStack>
                     </Stack>
                 </Container>
-                <Divider  marginBottom={14}/>
+                <Divider  marginBottom={8}/>
                 <Stack spacing={4} marginTop={15} marginBottom={-15}>
                     <Flex direction='row' justifyContent='center'>
-                        <Button colorScheme='blue' variant='solid' fontSize={60} onClick={handleWaterClick} width="83%" h="150px">
+                        <Button colorScheme='blue' variant='solid' fontSize={30} onClick={handleWaterClick} width="58%" h="80px">
                             💧+
                         </Button>
                     </Flex>
@@ -92,11 +92,12 @@ export const HomeView = ({tasks}) => {
                         <TicketSystem mealType={"🍽️"} increaseCalorie={increaseCalorieCount}/>
                     </Flex>
                 </Stack>
-            </CardBody>
-            <CardFooter>
-                <Button colorScheme='gray' variant='solid' fontSize={50} width="80px" h="80px">
+                <Button colorScheme='gray' variant='solid' fontSize={50} marginTop={-5} width="80px" h="80px">
                     📊
                 </Button>
+            </CardBody>
+            <CardFooter>
+
             </CardFooter>
         </Card>
     );
