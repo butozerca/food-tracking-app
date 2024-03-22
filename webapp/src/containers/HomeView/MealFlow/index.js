@@ -7,7 +7,7 @@ import { Textarea, Avatar, Heading } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
-import { Congrats } from './Congrats/congrats';
+import { Congrats } from './congrats';
 import { useSpeechRecognition } from 'react-speech-kit';
 import { IoEarOutline } from "react-icons/io5";
 import { FaQuestion } from "react-icons/fa";
