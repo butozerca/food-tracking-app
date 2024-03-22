@@ -13,7 +13,7 @@ import { IoEarOutline } from "react-icons/io5";
 import { FaQuestion } from "react-icons/fa";
 import { IoCamera } from "react-icons/io5";
 
-export const TicketSystem = ({mealType, increaseCalorie }) => {
+export const MealFlow = ({mealType, increaseCalorie }) => {
     useEffect(() => {
         console.log(increaseCalorie);
     }, [increaseCalorie]);
@@ -68,15 +68,6 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
     }, [img]);
 
     const sendData = () => {
-        // let new_ticket = {
-        //     "category": selectedCategory,
-        //     "description": issue
-        // }
-
-        // setIssue('');
-
-        // dispatch(sendTicket(new_ticket));
-        // onClose();
         setCongrats(true);
         updateCalories();
         stop();

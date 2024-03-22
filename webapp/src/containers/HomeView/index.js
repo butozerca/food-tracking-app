@@ -10,19 +10,16 @@ import {
     Divider,
     Stack,
     HStack,
-    Text,
-    Spacer,
     Flex,
     Box,
     Progress,
     Avatar,
-    WrapItem
 } from '@chakra-ui/react'
 import {Icon} from '@chakra-ui/react'
 import {CiDroplet} from "react-icons/ci";
 import {FaDroplet} from "react-icons/fa6";
 import './index.css';
-import {TicketSystem} from './TicketSystem';
+import {MealFlow} from './MealFlow';
 
 export const HomeView = () => {
     const [countWaterDone,
@@ -82,7 +79,7 @@ export const HomeView = () => {
                         {/* Submitting a photo of the food currently increases always by 350 calories */}
                         {/* <TicketSystem mealType={"snack"} increaseCalorie={increaseCalorieCount}/> */}
                     <Flex direction='row' justifyContent='center'>
-                        <TicketSystem mealType={"🍽️"} increaseCalorie={increaseCalorieCount}/>
+                        <MealFlow mealType={"🍽️"} increaseCalorie={increaseCalorieCount}/>
                     </Flex>
                 </Stack>
             </CardBody>
