@@ -3,8 +3,7 @@ import { Button, useDisclosure, Flex, Box, Center, Spacer } from '@chakra-ui/rea
 import { Stack } from '@chakra-ui/layout'
 
 import{IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react'
-import { Textarea, Avatar, Heading, CardHeader } from '@chakra-ui/react'
-import { Select } from '@chakra-ui/react'
+import { Textarea, Avatar, Heading } from '@chakra-ui/react'
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import { WebcamScreenshot } from './WebcameraScreenshot';
 import Webcam from "react-webcam"
@@ -44,9 +43,6 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
         height: 420,
         facingMode: "user",
     };
-
-    // randomly mocked each image
-    let user_id = 0 + Math.random() * (1000000 - 0);
 
     // show congrats message
     const [congrats, setCongrats] = useState(null);
@@ -97,27 +93,6 @@ export const TicketSystem = ({mealType, increaseCalorie }) => {
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImg(imageSrc);
-
-        let apiUrl = 'http://localhost:5000/save_image';
-        let imageData = imageSrc.replace(/^data:image\/png;base64,/, '');
-        let req = {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'No-Auth': 'True'
-        },
-        body: JSON.stringify({ image_data: imageData, id: user_id }),
-        }
-        user_id = user_id + 1;
-        fetch(apiUrl, req)
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.error(error);
-        });
 
         listen();
     }, [webcamRef]);

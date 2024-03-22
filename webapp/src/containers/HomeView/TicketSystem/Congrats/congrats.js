@@ -1,15 +1,11 @@
 import {Box, Heading, Text, Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
     TableContainer,
-    Button,
-    useEditable,} from '@chakra-ui/react'
-import React, {useEffect} from 'react';
+    Button} from '@chakra-ui/react'
 
 export const Congrats = ({onCloseExit}) => {
     return (
