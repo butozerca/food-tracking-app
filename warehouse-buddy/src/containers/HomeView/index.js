@@ -78,7 +78,7 @@ export const HomeView = ({tasks}) => {
                         </HStack>
                     </Stack>
                 </Container>
-                <Divider  marginBottom={8}/>
+                <Divider  marginBottom={12}/>
                 <Stack spacing={4} marginTop={15} marginBottom={-15}>
                     <Flex direction='row' justifyContent='center'>
                         <Button colorScheme='blue' variant='solid' fontSize={30} onClick={handleWaterClick} width="58%" h="80px">
@@ -92,7 +92,7 @@ export const HomeView = ({tasks}) => {
                         <TicketSystem mealType={"🍽️"} increaseCalorie={increaseCalorieCount}/>
                     </Flex>
                 </Stack>
-                <Button colorScheme='gray' variant='solid' fontSize={50} marginTop={-5} width="80px" h="80px">
+                <Button colorScheme='gray' variant='solid' marginTop={5} fontSize={50} width="80px" h="80px">
                     📊
                 </Button>
             </CardBody>
