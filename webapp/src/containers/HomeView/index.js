@@ -1,10 +1,4 @@
-import {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
 import {useState} from 'react';
-import {ChatInput} from './ChatInput';
-import {FastPromptSection} from './FastPromptSection';
-import {TaskBanner} from './TaskBanner';
-import {SpeechToText} from './ChatInput/SpeechToText';
 import {
     Button,
     Card,
@@ -27,7 +21,6 @@ import {
 import {Icon} from '@chakra-ui/react'
 import {CiDroplet} from "react-icons/ci";
 import {FaDroplet} from "react-icons/fa6";
-import { CiGlass } from "react-icons/ci";
 import './index.css';
 import {TicketSystem} from './TicketSystem';
 
