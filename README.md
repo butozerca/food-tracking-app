@@ -1,1 +1,1 @@
-# food-tracking-app
+# VitalEaty
